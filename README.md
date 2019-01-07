@@ -1,16 +1,16 @@
 # markdown-it-toc-and-anchor
-[![Travis Build Status](https://img.shields.io/travis/medfreeman/markdown-it-toc-and-anchor.svg?label=unix%20build)](https://travis-ci.org/medfreeman/markdown-it-toc-and-anchor)
+[![circleci](https://badgen.net/circleci/github/medfreeman/markdown-it-toc-and-anchor/master)](https://circleci.com/gh/medfreeman/markdown-it-toc-and-anchor)
 [![AppVeyor Build Status](https://img.shields.io/appveyor/ci/medfreeman/markdown-it-toc-and-anchor.svg?label=windows%20build)](https://ci.appveyor.com/project/medfreeman/markdown-it-toc-and-anchor)
-[![Version](https://img.shields.io/npm/v/markdown-it-toc-and-anchor.svg)](https://github.com/medfreeman/markdown-it-toc-and-anchor/blob/master/CHANGELOG.md)
+[![Version](https://img.shields.io/npm/v/markdown-it-toc-and-anchor.svg)](https://www.npmjs.com/package/markdown-it-toc-and-anchor)
 [![Coverage Status](https://img.shields.io/coveralls/medfreeman/markdown-it-toc-and-anchor/master.svg)](https://coveralls.io/github/medfreeman/markdown-it-toc-and-anchor?branch=master)
-[![Dependency Status](https://img.shields.io/david/medfreeman/markdown-it-toc-and-anchor.svg)](https://david-dm.org/medfreeman/markdown-it-toc-and-anchor)
+[![Dependency Status](https://img.shields.io/david/medfreeman/markdown-it-toc-and-anchor.svg)](https://david-dm.org/medfreeman/markdown-it-toc-and-anchor) [![Greenkeeper badge](https://badges.greenkeeper.io/medfreeman/markdown-it-toc-and-anchor.svg)](https://greenkeeper.io/)
 
 > markdown-it plugin to add toc and anchor links in headings
 
 ## Installation
 
 ```console
-$ npm install markdown-it-toc-and-anchor
+$ yarn add markdown-it-toc-and-anchor
 ```
 
 ## Usage
@@ -24,7 +24,7 @@ import markdownItTocAndAnchor from "markdown-it-toc-and-anchor"
 markdownIt({
     html: true,
     linkify: true,
-    typography: true,
+    typographer: true,
   })
     .use(markdownItTocAndAnchor, {
       // ...options
@@ -41,7 +41,7 @@ var markdownIt = require('markdown-it'),
 markdownIt({
     html: true,
     linkify: true,
-    typography: true,
+    typographer: true,
   })
     .use(markdownItTocAndAnchor, {
       // ...options
@@ -64,7 +64,7 @@ Allows you to enable/disable the toc transformation of `@[toc]`
 
 (default: `"markdownIt-TOC"`)
 
-Option to customize html class of the `<ul>` wrapping the toc
+Option to customize html class of the `<ul>` wrapping the toc. If no class is wanted set to `null`.
 
 #### `tocFirstLevel`
 
@@ -91,7 +91,7 @@ Example :
   markdownIt({
     html: true,
     linkify: true,
-    typography: true,
+    typographer: true,
   })
     .use(markdownItTocAndAnchor, {
       tocCallback: function(tocMarkdown, tocArray, tocHtml) {
@@ -110,7 +110,7 @@ Example :
   var mdIt = markdownIt({
     html: true,
     linkify: true,
-    typography: true,
+    typographer: true,
   })
     .use(markdownItTocAndAnchor)
 
@@ -130,7 +130,7 @@ Example :
   var mdIt = markdownIt({
     html: true,
     linkify: true,
-    typography: true,
+    typographer: true,
   })
     .use(markdownItTocAndAnchor)
 
@@ -174,11 +174,23 @@ Allows you to customize the anchor link symbol class name. If not null, symbol w
 
 Allows you to prepend/append the anchor link in the headings
 
+#### `anchorLinkPrefix`
+
+(default: `undefined`)
+
+Allows you to add a prefix to the generated header ids, e.g. `section-`.
+
 #### `anchorClassName`
 
 (default: `"markdownIt-Anchor"`)
 
-Allows you to customize the anchor link class
+Allows you to customize the anchor link class. If no class is wanted set to `null`.
+
+#### `wrapHeadingTextInAnchor`
+
+(default: `false`)
+
+Makes the entire heading into the anchor link (takes precedence over `anchorLinkSymbol` and `anchorLinkBefore`)
 
 #### `resetIds`
 
@@ -186,6 +198,19 @@ Allows you to customize the anchor link class
 
 Allows you to reset (or not) ids incrementation. Use it if you will have multiple
 documents on the same page.
+
+#### `slugify`
+
+(default: uses the [`uslug`](https://www.npmjs.com/package/uslug) package)
+
+Allows you to customize the slug function that create ids from string.
+
+Ex:
+```js
+   // ...
+   slugify : string => `/some/prefix/${string.replace(/(\/| |')/g, "_")}`
+   // ...
+```
 
 ---
 

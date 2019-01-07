@@ -1,6 +1,6 @@
 {
   "name": "@gerhobbelt/markdown-it-toc-and-anchor",
-  "version": "4.1.2-1",
+  "version": "4.2.0-1",
   "description": "markdown-it plugin to add toc and anchor links in headings",
   "keywords": [
     "markdown-it",
@@ -19,39 +19,42 @@
     "!**/__tests__"
   ],
   "dependencies": {
-    "clone": "^2.1.0",
+    "clone": "^2.1.2",
     "uslug": "^1.0.4"
   },
   "devDependencies": {
-    "ava": "^0.17.0",
-    "@gerhobbelt/babel-cli": "^6.4.0",
-    "@gerhobbelt/babel-core": "^6.4.0",
-    "@gerhobbelt/babel-eslint": "^7.1.1",
-    "@gerhobbelt/babel-preset-es2015": "^6.3.13",
-    "@gerhobbelt/babel-preset-stage-2": "^6.3.13",
-    "coveralls": "^2.11.9",
-    "eslint": "^3.12.2",
-    "eslint-config-i-am-meticulous": "^5.0.2",
-    "eslint-plugin-import": "^2.2.0",
-    "@gerhobbelt/markdown-it": "^8.2.2",
-    "npmpub": "^3.1.0",
-    "nyc": "^10.0.0"
+    "ava": "1.0.1",
+    "@gerhobbelt/babel-cli": "7.2.1-26",
+    "@gerhobbelt/babel-plugin-proposal-object-rest-spread": "7.2.1-26",
+    "@gerhobbelt/babel-core": "7.2.1-26",
+    "@gerhobbelt/babel-eslint": "9.0.0-3",
+    "@gerhobbelt/babel-preset-es2015": "7.2.1-26",
+    "@gerhobbelt/babel-preset-stage-2": "7.2.1-26",
+    "coveralls": "3.0.2",
+    "eslint": "5.12.0",
+    "eslint-config-i-am-meticulous": "11.0.0",
+    "eslint-plugin-import": "2.14.0",
+    "@gerhobbelt/markdown-it": "8.4.2-24",
+    "nyc": "13.1.0",
+    "standard-version": "4.4.0"
   },
   "scripts": {
-    "prepublish": "babel --ignore __tests__ src --out-dir dist",
     "lint": "eslint --ignore-path .gitignore --fix .",
     "tests": "ava",
     "pretest": "npm -s run lint",
     "test": "npm -s run tests",
     "test-with-coverage": "nyc npm run test",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "release": "npmpub",
+    "build": "babel src --ignore \"src/__tests__/**/*.js\" --out-dir dist --delete-dir-on-start",
+    "release-orig": "standard-version; git push --follow-tags",
     "pub": "npm publish --access public"
   },
   "babel": {
     "presets": [
-      "es2015",
-      "stage-2"
+      "@babel/preset-env"
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-object-rest-spread"
     ]
   },
   "eslintConfig": {
@@ -64,7 +67,7 @@
       "**/__tests__/*.js"
     ],
     "require": [
-      "babel-core/register"
+      "@babel/register"
     ]
   },
   "nyc": {
