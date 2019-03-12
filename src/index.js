@@ -21,45 +21,44 @@ const makeSafe = (string, headingIds, slugifyFn) => {
 };
 
 const space = () => {
-  return { ...new Token("text", "", 0), content: " " };
+  const token = new Token("text", "", 0);
+  token.content = " ";
+  return token;
 };
 
 const renderAnchorLinkSymbol = options => {
   if (options.anchorLinkSymbolClassName) {
+    const spanOpenToken = new Token("span_open", "span", 1),
+      textToken = new Token("text", "", 0);
+    spanOpenToken.attrPush(["class", options.anchorLinkSymbolClassName]);
+    textToken.content = options.anchorLinkSymbol
+
     return [
-      {
-        ...new Token("span_open", "span", 1),
-        attrs: [["class", options.anchorLinkSymbolClassName]]
-      },
-      {
-        ...new Token("text", "", 0),
-        content: options.anchorLinkSymbol
-      },
+      spanOpenToken,
+      textToken,
       new Token("span_close", "span", -1)
     ];
   } else {
+    const textToken = new Token("text", "", 0);
+    textToken.content = options.anchorLinkSymbol
     return [
-      {
-        ...new Token("text", "", 0),
-        content: options.anchorLinkSymbol
-      }
+      textToken
     ];
   }
 };
 
 const renderAnchorLink = (anchor, options, tokens, idx) => {
-  const attrs = [];
+  const openLinkToken = new Token("link_open", "a", 1);
+  // const attrs = [];
 
   if (options.anchorClassName != null) {
-    attrs.push(["class", options.anchorClassName]);
+    openLinkToken.attrPush(["class", options.anchorClassName]);
   }
 
-  attrs.push(["href", `#${anchor}`]);
+  openLinkToken.attrPush(["href", `#${anchor}`]);
 
-  const openLinkToken = {
-    ...new Token("link_open", "a", 1),
-    attrs
-  };
+  // openLinkToken.attrPush(attrs)
+
   const closeLinkToken = new Token("link_close", "a", -1);
 
   if (options.wrapHeadingTextInAnchor) {
@@ -111,7 +110,7 @@ const treeToMarkdownBulletList = (tree, indent = 0) =>
     .join("");
 
 const generateTocMarkdownFromArray = (headings, options) => {
-  const tree = { nodes: [] };
+  const tree = {nodes: []};
   // create an ast
   headings.forEach(heading => {
     if (
@@ -164,7 +163,7 @@ export default function(md, options) {
   // initialize key ids for each instance
   headingIds = {};
 
-  md.core.ruler.push("init_toc", function(state) {
+  md.core.ruler.push("init_toc", function (state) {
     const tokens = state.tokens;
 
     // reset key ids for each document
@@ -255,10 +254,10 @@ export default function(md, options) {
 
     if (
       // Reject if the token does not start with @[
-      state.src.charCodeAt(state.pos) !== 0x40 ||
-      state.src.charCodeAt(state.pos + 1) !== 0x5b ||
-      // Don’t run any pairs in validation mode
-      silent
+    state.src.charCodeAt(state.pos) !== 0x40 ||
+    state.src.charCodeAt(state.pos + 1) !== 0x5b ||
+    // Don’t run any pairs in validation mode
+    silent
     ) {
       return false;
     }
@@ -284,12 +283,12 @@ export default function(md, options) {
 
   const originalHeadingOpen =
     md.renderer.rules.heading_open ||
-    function(...args) {
+    function (...args) {
       const [tokens, idx, options, , self] = args;
       return self.renderToken(tokens, idx, options);
     };
 
-  md.renderer.rules.heading_open = function(...args) {
+  md.renderer.rules.heading_open = function (...args) {
     const [tokens, idx, , ,] = args;
 
     const attrs = (tokens[idx].attrs = tokens[idx].attrs || []);
