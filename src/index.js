@@ -157,6 +157,7 @@ export default function(md, options) {
     anchorLinkSpace: true,
     anchorLinkSymbolClassName: null,
     wrapHeadingTextInAnchor: false,
+    appendIdToHeading: true,
     ...options
   };
 
@@ -277,26 +278,28 @@ export default function(md, options) {
     return true;
   });
 
-  const originalHeadingOpen =
-    md.renderer.rules.heading_open ||
-    function(...args) {
-      const [tokens, idx, options, , self] = args;
-      return self.renderToken(tokens, idx, options);
+  if (options.appendIdToHeading) {
+    const originalHeadingOpen =
+      md.renderer.rules.heading_open ||
+      function(...args) {
+        const [tokens, idx, options, , self] = args;
+        return self.renderToken(tokens, idx, options);
+      };
+
+    md.renderer.rules.heading_open = function(...args) {
+      const [tokens, idx, , ,] = args;
+
+      const attrs = (tokens[idx].attrs = tokens[idx].attrs || []);
+      const anchor = tokens[idx + 1]._tocAnchor;
+      attrs.push(["id", anchor]);
+
+      if (options.anchorLink) {
+        renderAnchorLink(anchor, options, ...args);
+      }
+
+      return originalHeadingOpen.apply(this, args);
     };
-
-  md.renderer.rules.heading_open = function(...args) {
-    const [tokens, idx, , ,] = args;
-
-    const attrs = (tokens[idx].attrs = tokens[idx].attrs || []);
-    const anchor = tokens[idx + 1]._tocAnchor;
-    attrs.push(["id", anchor]);
-
-    if (options.anchorLink) {
-      renderAnchorLink(anchor, options, ...args);
-    }
-
-    return originalHeadingOpen.apply(this, args);
-  };
+  }
 
   md.renderer.rules.toc_open = () => "";
   md.renderer.rules.toc_close = () => "";

@@ -35,6 +35,24 @@ test("markdown-it-toc-and-anchor toc", t => {
 
   t.is(
     mdIt(
+      `@[toc]
+# Heading`,
+      {
+        toc: true,
+        appendIdToHeading: false
+      }
+    ),
+    `<p><ul class="markdownIt-TOC">
+<li><a href="#heading">Heading</a></li>
+</ul>
+</p>
+<h1>Heading</h1>\n`,
+    "should not add id attribute if `appendIdToHeading` is falsy"
+  );
+
+
+  t.is(
+    mdIt(
       `test
 [TOC]
 # Heading`,
@@ -422,4 +440,5 @@ resetIds is true and toc is true`
 same names on different renderings with the same markdownIt instance when
 resetIds is false and toc is true`
   );
+
 });

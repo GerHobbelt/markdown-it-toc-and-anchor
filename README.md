@@ -211,6 +211,12 @@ documents on the same page.
 
 Allows you to customize the slug function that create ids from string.
 
+#### `appendIdToHeading`
+
+(default: `true`)
+
+To make anchor links work, should append id attribute to headings, but if other plugins have already done this, you can turn it off.
+
 Ex:
 ```js
    // ...
