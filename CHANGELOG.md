@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.4.0](https://github.com/hikerpig/markdown-it-toc-and-anchor/compare/v4.3.1...v4.4.0) (2019-07-27)
+
+
+### Features
+
+* add `options.appendIdToHeading`, set it to false to prevent id attribute appended ([ec45059](https://github.com/hikerpig/markdown-it-toc-and-anchor/commit/ec45059))
+
+
+
 ### [4.3.1](https://github.com/hikerpig/markdown-it-toc-and-anchor/compare/v4.3.0...v4.3.1) (2019-07-27)
 
 

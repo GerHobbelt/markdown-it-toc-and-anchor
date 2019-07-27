@@ -1,6 +1,6 @@
 {
   "name": "@hikerpig/markdown-it-toc-and-anchor",
-  "version": "4.3.1",
+  "version": "4.4.0",
   "description": "markdown-it plugin to add toc and anchor links in headings",
   "keywords": [
     "markdown-it",
