@@ -7,6 +7,8 @@ test("markdown-it-toc-and-anchor toc", t => {
 
   t.is(mdIt("@[toc]"), "<p></p>\n", "should do nothing if not asked to");
 
+  t.is(mdIt("@[toc]", { toc: true }), "<p></p>\n", "should do nothing if not asked to");
+
   t.is(
     mdIt("@[toc]", { toc: true }),
     "<p></p>\n",
@@ -29,6 +31,25 @@ test("markdown-it-toc-and-anchor toc", t => {
 </p>
 <h1 id="heading">Heading</h1>\n`,
     "should work with soft breaks"
+  );
+
+  t.is(
+    mdIt(
+      `test
+[TOC]
+# Heading`,
+      {
+        toc: true,
+        tocPattern: /\[TOC\]/
+      }
+    ),
+    `<p>test
+<ul class="markdownIt-TOC">
+<li><a href="#heading">Heading</a></li>
+</ul>
+</p>
+<h1 id="heading">Heading</h1>\n`,
+    "should work with custom tocPattern"
   );
 
   t.is(
@@ -312,7 +333,7 @@ and next element in the same inline token`
       '<h1 id="heading">Heading</h1>\n'
     ],
     `should return the same anchor hrefs for the same markdown headings with
-same names on different renderings with the same markdownIt instance when 
+same names on different renderings with the same markdownIt instance when
 resetIds is true`
   );
 
@@ -323,8 +344,8 @@ resetIds is true`
       '<h1 id="heading-2">Heading</h1>\n',
       '<h1 id="heading-3">Heading</h1>\n'
     ],
-    `should return different anchor hrefs for the same markdown headings with 
-same names on different renderings with the same markdownIt instance when 
+    `should return different anchor hrefs for the same markdown headings with
+same names on different renderings with the same markdownIt instance when
 resetIds is false`
   );
 
@@ -360,8 +381,8 @@ resetIds is false`
 </p>
 <h1 id="heading">Heading</h1>\n`
     ],
-    `should return the same anchor hrefs for the same markdown headings with 
-same names on different renderings with the same markdownIt instance when 
+    `should return the same anchor hrefs for the same markdown headings with
+same names on different renderings with the same markdownIt instance when
 resetIds is true and toc is true`
   );
 
@@ -397,8 +418,8 @@ resetIds is true and toc is true`
 </p>
 <h1 id="heading-3">Heading</h1>\n`
     ],
-    `should return different anchor hrefs for the same markdown headings with 
-same names on different renderings with the same markdownIt instance when 
+    `should return different anchor hrefs for the same markdown headings with
+same names on different renderings with the same markdownIt instance when
 resetIds is false and toc is true`
   );
 });

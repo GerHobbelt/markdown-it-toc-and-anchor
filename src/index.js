@@ -2,7 +2,7 @@ import clone from "clone";
 import uslug from "uslug";
 import Token from "markdown-it/lib/token";
 
-const DEFAULT_TOC_PATTERN = /@\[toc\]/;
+const DEFAULT_TOC_PATTERN = /@\[toc\]/im;
 const TOC_MARKUP = 'TOC';
 
 let markdownItSecondInstance = () => {};
@@ -162,6 +162,8 @@ export default function(md, options) {
 
   markdownItSecondInstance = clone(md);
 
+  const patternCharLength = options.tocPattern.source.replace(/\\/g, '').length;
+
   // initialize key ids for each instance
   headingIds = {};
 
@@ -250,24 +252,16 @@ export default function(md, options) {
     }
   });
 
-  md.inline.ruler.after("emphasis", "toc", (state, silent) => {
+  md.inline.ruler.after("emphasis", "toc", (state) => {
     let token;
-    let match;
-
-    if (
-      // Reject if the token does not start with @[
-      state.src.charCodeAt(state.pos) !== 0x40 ||
-      state.src.charCodeAt(state.pos + 1) !== 0x5b ||
-      // Don’t run any pairs in validation mode
-      silent
-    ) {
-      return false;
-    }
 
     // Detect TOC markdown
-    match = options.tocPattern.exec(state.src);
-    match = !match ? [] : match.filter(m => m);
-    if (match.length < 1) {
+    const match = options.tocPattern.exec(state.src);
+    if (!match) {
+      return false;
+    }
+    const matchStart = match.index
+    if (state.pos < matchStart) {
       return false;
     }
 
@@ -278,7 +272,7 @@ export default function(md, options) {
     token = state.push("toc_close", "toc", -1);
 
     // Update pos so the parser can continue
-    state.pos = state.pos + 6;
+    state.pos = state.pos + patternCharLength;
 
     return true;
   });
