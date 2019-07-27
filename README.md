@@ -198,6 +198,12 @@ Allows you to customize the anchor link class. If no class is wanted set to `nul
 
 Makes the entire heading into the anchor link (takes precedence over `anchorLinkSymbol` and `anchorLinkBefore`)
 
+#### `appendIdToHeading`
+
+(default: `true`)
+
+To make anchor links work, should append id attribute to headings, but if other plugins have already done this, you can turn it off.
+
 #### `resetIds`
 
 (default: `true`)
@@ -210,12 +216,6 @@ documents on the same page.
 (default: uses the [`uslug`](https://www.npmjs.com/package/uslug) package)
 
 Allows you to customize the slug function that create ids from string.
-
-#### `appendIdToHeading`
-
-(default: `true`)
-
-To make anchor links work, should append id attribute to headings, but if other plugins have already done this, you can turn it off.
 
 Ex:
 ```js
