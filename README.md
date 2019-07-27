@@ -58,7 +58,13 @@ markdownIt({
 
 (default: `true`)
 
-Allows you to enable/disable the toc transformation of `@[toc]`
+Allows you to enable/disable the toc transformation of toc
+
+#### `tocPattern`
+
+(default: `/\[@toc\]/`)
+
+The pattern to detect. You can specify it to meet other conventions, such as `\[TOC\]` for Typora.
 
 #### `tocClassName`
 

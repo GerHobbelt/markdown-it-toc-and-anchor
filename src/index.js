@@ -2,8 +2,8 @@ import clone from "clone";
 import uslug from "uslug";
 import Token from "markdown-it/lib/token";
 
-const TOC = "@[toc]";
-const TOC_RE = /^@\[toc\]/im;
+const DEFAULT_TOC_PATTERN = /@\[toc\]/;
+const TOC_MARKUP = 'TOC';
 
 let markdownItSecondInstance = () => {};
 let headingIds = {};
@@ -145,6 +145,7 @@ export default function(md, options) {
   options = {
     toc: true,
     tocClassName: "markdownIt-TOC",
+    tocPattern: DEFAULT_TOC_PATTERN,
     tocFirstLevel: 1,
     tocLastLevel: 6,
     tocCallback: null,
@@ -264,7 +265,7 @@ export default function(md, options) {
     }
 
     // Detect TOC markdown
-    match = TOC_RE.exec(state.src);
+    match = options.tocPattern.exec(state.src);
     match = !match ? [] : match.filter(m => m);
     if (match.length < 1) {
       return false;
@@ -272,7 +273,7 @@ export default function(md, options) {
 
     // Build content
     token = state.push("toc_open", "toc", 1);
-    token.markup = TOC;
+    token.markup = TOC_MARKUP;
     token = state.push("toc_body", "", 0);
     token = state.push("toc_close", "toc", -1);
 
