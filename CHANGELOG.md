@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.5.0](https://github.com/hikerpig/markdown-it-toc-and-anchor/compare/v4.4.0...v4.5.0) (2019-08-25)
+
+
+### Features
+
+* default slugify fn should not cast lowercase, use `uslug(string, { lower: false })` ([8ac4d55](https://github.com/hikerpig/markdown-it-toc-and-anchor/commit/8ac4d55))
+
 ## [4.4.0](https://github.com/hikerpig/markdown-it-toc-and-anchor/compare/v4.3.1...v4.4.0) (2019-07-27)
 
 
