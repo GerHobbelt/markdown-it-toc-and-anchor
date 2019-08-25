@@ -24,6 +24,10 @@ const space = () => {
   return { ...new Token("text", "", 0), content: " " };
 };
 
+const defaultSlugifyFn = (string) => {
+  return uslug(string, { lower: false })
+}
+
 const renderAnchorLinkSymbol = options => {
   if (options.anchorLinkSymbolClassName) {
     return [
@@ -181,7 +185,7 @@ export default function(md, options) {
     let tocTokens = [];
 
     const slugifyFn =
-      (typeof options.slugify === "function" && options.slugify) || uslug;
+      (typeof options.slugify === "function" && options.slugify) || defaultSlugifyFn;
 
     for (let i = 0; i < tokens.length; i++) {
       if (tokens[i].type !== "heading_close") {

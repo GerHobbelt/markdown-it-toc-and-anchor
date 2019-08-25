@@ -213,7 +213,7 @@ documents on the same page.
 
 #### `slugify`
 
-(default: uses the [`uslug`](https://www.npmjs.com/package/uslug) package)
+(default: uses the [`uslug`](https://www.npmjs.com/package/uslug) package, with option `{ lower: false }`)
 
 Allows you to customize the slug function that create ids from string.
 

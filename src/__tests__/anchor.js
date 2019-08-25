@@ -14,7 +14,7 @@ test("markdown-it-toc-and-anchor anchor", t => {
     ),
     /* eslint-disable max-len */
     `<p></p>
-<h1 id="heading"><a class="markdownIt-Anchor" href="#heading">#</a> 'Heading' ?</h1>
+<h1 id="Heading"><a class="markdownIt-Anchor" href="#Heading">#</a> 'Heading' ?</h1>
 <h1 id="lel"><a class="markdownIt-Anchor" href="#lel">#</a> $.lel!</h1>
 <h1 id="lel-2"><a class="markdownIt-Anchor" href="#lel-2">#</a> $.lel?</h1>\n`,
     /* eslint-enable max-len */
@@ -35,7 +35,7 @@ test("markdown-it-toc-and-anchor anchor", t => {
     ),
     /* eslint-disable max-len */
     `<p></p>
-<h1 id="heading">'Heading' ? <a class="markdownIt-Anchor" href="#heading">#</a></h1>
+<h1 id="Heading">'Heading' ? <a class="markdownIt-Anchor" href="#Heading">#</a></h1>
 <h1 id="lel">$.lel! <a class="markdownIt-Anchor" href="#lel">#</a></h1>
 <h1 id="lel-2">$.lel? <a class="markdownIt-Anchor" href="#lel-2">#</a></h1>\n`,
     /* eslint-enable max-len */
@@ -55,7 +55,7 @@ test("markdown-it-toc-and-anchor anchor", t => {
       }
     ),
     `<p></p>
-<h1 id="heading"><a class="anchor" href="#heading">` +
+<h1 id="Heading"><a class="anchor" href="#Heading">` +
       '<span class="octicon octicon-link"></span></a>Heading</h1>\n',
     "should support GitHub style anchor link"
   );
@@ -83,7 +83,7 @@ test("markdown-it-toc-and-anchor anchor", t => {
       }
     ),
     `<p></p>
-<h1 id="heading"><a href="#heading">#</a> Heading</h1>
+<h1 id="Heading"><a href="#Heading">#</a> Heading</h1>
 `,
     "should handle not including default class" +
       " in anchors when setting anchorClassName to null"
@@ -115,7 +115,7 @@ test("markdown-it-toc-and-anchor anchor", t => {
     ),
     /* eslint-disable max-len */
     `<p></p>
-<h1 id="heading"><a class="markdownIt-Anchor" href="#heading">Heading</a></h1>\n`,
+<h1 id="Heading"><a class="markdownIt-Anchor" href="#Heading">Heading</a></h1>\n`,
     /* eslint-enable max-len */
     "should support wrapping heading text in the anchor link"
   );
@@ -131,7 +131,7 @@ test("markdown-it-toc-and-anchor anchor", t => {
       }
     ),
     /* eslint-disable max-len */
-    `<h1 id="section-hello-world"><a class="markdownIt-Anchor" href="#section-hello-world">#</a> Hello World</h1>\n`,
+    `<h1 id="section-Hello-World"><a class="markdownIt-Anchor" href="#section-Hello-World">#</a> Hello World</h1>\n`,
     /* eslint-enable max-len */
     "should use prefix"
   );
