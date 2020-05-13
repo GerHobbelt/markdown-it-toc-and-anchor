@@ -5,10 +5,9 @@
 *.log
 
 # Node.js / npm
-node_modules
-
-# build
-dist
+node_modules/
 
 # code coverage
 .nyc_output
+coverage/
+

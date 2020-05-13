@@ -1,13 +1,13 @@
-import clone from "clone";
-import uslug from "uslug";
-import Token from "markdown-it/lib/token";
+import clone from 'clone';
+import uslug from 'uslug';
+import Token from 'markdown-it/lib/token';
 
-const TOC = "@[toc]";
+const TOC = '@[toc]';
 const TOC_RE = /^@\[toc\]/im;
 
 let markdownItSecondInstance = () => {};
 let headingIds = {};
-let tocHtml = "";
+let tocHtml = '';
 
 const repeat = (string, num) => new Array(num + 1).join(string);
 
@@ -17,50 +17,50 @@ const makeSafe = (string, headingIds, slugifyFn) => {
     headingIds[key] = 0;
   }
   headingIds[key]++;
-  return key + (headingIds[key] > 1 ? `-${headingIds[key]}` : "");
+  return key + (headingIds[key] > 1 ? `-${headingIds[key]}` : '');
 };
 
 const space = () => {
-  return { ...new Token("text", "", 0), content: " " };
+  return { ...new Token('text', '', 0), content: ' ' };
 };
 
 const renderAnchorLinkSymbol = options => {
   if (options.anchorLinkSymbolClassName) {
     return [
       {
-        ...new Token("span_open", "span", 1),
-        attrs: [["class", options.anchorLinkSymbolClassName]]
+        ...new Token('span_open', 'span', 1),
+        attrs: [ [ 'class', options.anchorLinkSymbolClassName ] ]
       },
       {
-        ...new Token("text", "", 0),
+        ...new Token('text', '', 0),
         content: options.anchorLinkSymbol
       },
-      new Token("span_close", "span", -1)
-    ];
-  } else {
-    return [
-      {
-        ...new Token("text", "", 0),
-        content: options.anchorLinkSymbol
-      }
+      new Token('span_close', 'span', -1)
     ];
   }
+  return [
+    {
+      ...new Token('text', '', 0),
+      content: options.anchorLinkSymbol
+    }
+  ];
+
 };
 
 const renderAnchorLink = (anchor, options, tokens, idx) => {
   const attrs = [];
 
   if (options.anchorClassName != null) {
-    attrs.push(["class", options.anchorClassName]);
+    attrs.push([ 'class', options.anchorClassName ]);
   }
 
-  attrs.push(["href", `#${anchor}`]);
+  attrs.push([ 'href', `#${anchor}` ]);
 
   const openLinkToken = {
-    ...new Token("link_open", "a", 1),
+    ...new Token('link_open', 'a', 1),
     attrs
   };
-  const closeLinkToken = new Token("link_close", "a", -1);
+  const closeLinkToken = new Token('link_close', 'a', -1);
 
   if (options.wrapHeadingTextInAnchor) {
     tokens[idx + 1].children.unshift(openLinkToken);
@@ -75,8 +75,8 @@ const renderAnchorLink = (anchor, options, tokens, idx) => {
     // `push` or `unshift` according to anchorLinkBefore option
     // space is at the opposite side.
     const actionOnArray = {
-      false: "push",
-      true: "unshift"
+      'false': 'push',
+      'true': 'unshift'
     };
 
     // insert space between anchor link and heading ?
@@ -92,23 +92,23 @@ const renderAnchorLink = (anchor, options, tokens, idx) => {
 const treeToMarkdownBulletList = (tree, indent = 0) =>
   tree
     .map(item => {
-      const indentation = "  ";
+      const indentation = '  ';
       let node = `${repeat(indentation, indent)}*`;
       if (item.heading.content) {
         const contentWithoutAnchor = item.heading.content.replace(
           /\[([^\]]*)\]\([^)]*\)/g,
-          "$1"
+          '$1'
         );
-        node += " " + `[${contentWithoutAnchor}](#${item.heading.anchor})\n`;
+        node += ' ' + `[${contentWithoutAnchor}](#${item.heading.anchor})\n`;
       } else {
-        node += "\n";
+        node += '\n';
       }
       if (item.nodes.length) {
         node += treeToMarkdownBulletList(item.nodes, indent + 1);
       }
       return node;
     })
-    .join("");
+    .join('');
 
 const generateTocMarkdownFromArray = (headings, options) => {
   const tree = { nodes: [] };
@@ -141,17 +141,17 @@ const generateTocMarkdownFromArray = (headings, options) => {
   return treeToMarkdownBulletList(tree.nodes);
 };
 
-export default function(md, options) {
+export default function (md, options) {
   options = {
     toc: true,
-    tocClassName: "markdownIt-TOC",
+    tocClassName: 'markdownIt-TOC',
     tocFirstLevel: 1,
     tocLastLevel: 6,
     tocCallback: null,
     anchorLink: true,
-    anchorLinkSymbol: "#",
+    anchorLinkSymbol: '#',
     anchorLinkBefore: true,
-    anchorClassName: "markdownIt-Anchor",
+    anchorClassName: 'markdownIt-Anchor',
     resetIds: true,
     anchorLinkSpace: true,
     anchorLinkSymbolClassName: null,
@@ -164,7 +164,7 @@ export default function(md, options) {
   // initialize key ids for each instance
   headingIds = {};
 
-  md.core.ruler.push("init_toc", function(state) {
+  md.core.ruler.push('init_toc', function (state) {
     const tokens = state.tokens;
 
     // reset key ids for each document
@@ -173,26 +173,26 @@ export default function(md, options) {
     }
 
     const tocArray = [];
-    let tocMarkdown = "";
+    let tocMarkdown = '';
     let tocTokens = [];
 
     const slugifyFn =
-      (typeof options.slugify === "function" && options.slugify) || uslug;
+      (typeof options.slugify === 'function' && options.slugify) || uslug;
 
     for (let i = 0; i < tokens.length; i++) {
-      if (tokens[i].type !== "heading_close") {
+      if (tokens[i].type !== 'heading_close') {
         continue;
       }
 
       const heading = tokens[i - 1];
       const heading_close = tokens[i];
 
-      if (heading.type === "inline") {
+      if (heading.type === 'inline') {
         let content;
         if (
           heading.children &&
           heading.children.length > 0 &&
-          heading.children[0].type === "link_open"
+          heading.children[0].type === 'link_open'
         ) {
           // headings that contain links have to be processed
           // differently since nested links aren't allowed in markdown
@@ -201,7 +201,7 @@ export default function(md, options) {
         } else {
           content = heading.content;
           heading._tocAnchor = makeSafe(
-            heading.children.reduce((acc, t) => acc + t.content, ""),
+            heading.children.reduce((acc, t) => acc + t.content, ''),
             headingIds,
             slugifyFn
           );
@@ -225,13 +225,13 @@ export default function(md, options) {
 
     // Adding tocClassName to 'ul' element
     if (
-      typeof tocTokens[0] === "object" &&
-      tocTokens[0].type === "bullet_list_open"
+      typeof tocTokens[0] === 'object' &&
+      tocTokens[0].type === 'bullet_list_open'
     ) {
       const attrs = (tocTokens[0].attrs = tocTokens[0].attrs || []);
 
       if (options.tocClassName != null) {
-        attrs.push(["class", options.tocClassName]);
+        attrs.push([ 'class', options.tocClassName ]);
       }
     }
 
@@ -240,16 +240,16 @@ export default function(md, options) {
       markdownItSecondInstance.options
     );
 
-    if (typeof state.env.tocCallback === "function") {
+    if (typeof state.env.tocCallback === 'function') {
       state.env.tocCallback.call(undefined, tocMarkdown, tocArray, tocHtml);
-    } else if (typeof options.tocCallback === "function") {
+    } else if (typeof options.tocCallback === 'function') {
       options.tocCallback.call(undefined, tocMarkdown, tocArray, tocHtml);
-    } else if (typeof md.options.tocCallback === "function") {
+    } else if (typeof md.options.tocCallback === 'function') {
       md.options.tocCallback.call(undefined, tocMarkdown, tocArray, tocHtml);
     }
   });
 
-  md.inline.ruler.after("emphasis", "toc", (state, silent) => {
+  md.inline.ruler.after('emphasis', 'toc', (state, silent) => {
     let token;
     let match;
 
@@ -271,30 +271,30 @@ export default function(md, options) {
     }
 
     // Build content
-    token = state.push("toc_open", "toc", 1);
+    token = state.push('toc_open', 'toc', 1);
     token.markup = TOC;
-    token = state.push("toc_body", "", 0);
-    token = state.push("toc_close", "toc", -1);
+    token = state.push('toc_body', '', 0);
+    token = state.push('toc_close', 'toc', -1);
 
     // Update pos so the parser can continue
-    state.pos = state.pos + 6;
+    state.pos += 6;
 
     return true;
   });
 
   const originalHeadingOpen =
     md.renderer.rules.heading_open ||
-    function(...args) {
-      const [tokens, idx, options, , self] = args;
+    function (...args) {
+      const [ tokens, idx, options, , self ] = args;
       return self.renderToken(tokens, idx, options);
     };
 
-  md.renderer.rules.heading_open = function(...args) {
-    const [tokens, idx, , ,] = args;
+  md.renderer.rules.heading_open = function (...args) {
+    const [ tokens, idx, , , ] = args;
 
     const attrs = (tokens[idx].attrs = tokens[idx].attrs || []);
     const anchor = tokens[idx + 1]._tocAnchor;
-    attrs.push(["id", anchor]);
+    attrs.push([ 'id', anchor ]);
 
     if (options.anchorLink) {
       renderAnchorLink(anchor, options, ...args);
@@ -303,9 +303,9 @@ export default function(md, options) {
     return originalHeadingOpen.apply(this, args);
   };
 
-  md.renderer.rules.toc_open = () => "";
-  md.renderer.rules.toc_close = () => "";
-  md.renderer.rules.toc_body = () => "";
+  md.renderer.rules.toc_open = () => '';
+  md.renderer.rules.toc_close = () => '';
+  md.renderer.rules.toc_body = () => '';
 
   if (options.toc) {
     md.renderer.rules.toc_body = () => tocHtml;

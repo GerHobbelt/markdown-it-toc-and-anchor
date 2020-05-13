@@ -1,8 +1,8 @@
-import test from "ava";
+import test from 'ava';
 
-import mdIt from "./utils/md-it";
+import mdIt from './utils/md-it';
 
-test("markdown-it-toc-and-anchor anchor", t => {
+test('markdown-it-toc-and-anchor anchor', t => {
   t.is(
     mdIt(
       `@[toc]
@@ -18,7 +18,7 @@ test("markdown-it-toc-and-anchor anchor", t => {
 <h1 id="lel"><a class="markdownIt-Anchor" href="#lel">#</a> $.lel!</h1>
 <h1 id="lel-2"><a class="markdownIt-Anchor" href="#lel-2">#</a> $.lel?</h1>\n`,
     /* eslint-enable max-len */
-    "should add anchors"
+    'should add anchors'
   );
 
   t.is(
@@ -39,7 +39,7 @@ test("markdown-it-toc-and-anchor anchor", t => {
 <h1 id="lel">$.lel! <a class="markdownIt-Anchor" href="#lel">#</a></h1>
 <h1 id="lel-2">$.lel? <a class="markdownIt-Anchor" href="#lel-2">#</a></h1>\n`,
     /* eslint-enable max-len */
-    "should add anchors after"
+    'should add anchors after'
   );
 
   t.is(
@@ -48,16 +48,16 @@ test("markdown-it-toc-and-anchor anchor", t => {
 # Heading`,
       {
         anchorLink: true,
-        anchorClassName: "anchor",
-        anchorLinkSymbol: "",
-        anchorLinkSymbolClassName: "octicon octicon-link",
+        anchorClassName: 'anchor',
+        anchorLinkSymbol: '',
+        anchorLinkSymbolClassName: 'octicon octicon-link',
         anchorLinkSpace: false
       }
     ),
     `<p></p>
 <h1 id="heading"><a class="anchor" href="#heading">` +
       '<span class="octicon octicon-link"></span></a>Heading</h1>\n',
-    "should support GitHub style anchor link"
+    'should support GitHub style anchor link'
   );
 
   t.is(
@@ -69,7 +69,7 @@ test("markdown-it-toc-and-anchor anchor", t => {
     `<p></p>
 <h1 id=""></h1>
 `,
-    "should support empty heading"
+    'should support empty heading'
   );
 
   t.is(
@@ -85,8 +85,8 @@ test("markdown-it-toc-and-anchor anchor", t => {
     `<p></p>
 <h1 id="heading"><a href="#heading">#</a> Heading</h1>
 `,
-    "should handle not including default class" +
-      " in anchors when setting anchorClassName to null"
+    'should handle not including default class' +
+      ' in anchors when setting anchorClassName to null'
   );
 
   t.is(
@@ -94,13 +94,13 @@ test("markdown-it-toc-and-anchor anchor", t => {
       `@[toc]
 # test me i'm famous`,
       {
-        slugify: string => `/some/prefix/${string.replace(/(\/| |')/g, "_")}`
+        slugify: string => `/some/prefix/${string.replace(/(\/| |')/g, '_')}`
       }
     ),
     `<p></p>
 <h1 id="/some/prefix/test_me_i_m_famous">test me i'm famous</h1>
 `,
-    "should support custom slugify function from readme"
+    'should support custom slugify function from readme'
   );
 
   t.is(
@@ -117,7 +117,7 @@ test("markdown-it-toc-and-anchor anchor", t => {
     `<p></p>
 <h1 id="heading"><a class="markdownIt-Anchor" href="#heading">Heading</a></h1>\n`,
     /* eslint-enable max-len */
-    "should support wrapping heading text in the anchor link"
+    'should support wrapping heading text in the anchor link'
   );
 
   t.is(
@@ -127,12 +127,12 @@ test("markdown-it-toc-and-anchor anchor", t => {
 `,
       {
         anchorLink: true,
-        anchorLinkPrefix: "section-"
+        anchorLinkPrefix: 'section-'
       }
     ),
     /* eslint-disable max-len */
-    `<h1 id="section-hello-world"><a class="markdownIt-Anchor" href="#section-hello-world">#</a> Hello World</h1>\n`,
+    '<h1 id="section-hello-world"><a class="markdownIt-Anchor" href="#section-hello-world">#</a> Hello World</h1>\n',
     /* eslint-enable max-len */
-    "should use prefix"
+    'should use prefix'
   );
 });

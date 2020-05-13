@@ -1,5 +1,6 @@
+/.github
+support/
+test/
+Makefile
 .*
 *.yml
-src/
-.nyc_output/
-coverage/

@@ -10,33 +10,13 @@
     "anchor"
   ],
   "author": "Maxime Thirouin",
+  "repository": "GerHobbelt/markdown-it-toc-and-anchor",
   "license": "MIT",
-  "repository": "https://github.com/medfreeman/markdown-it-toc-and-anchor.git",
+  "source": "src/index.js",
   "main": "dist/index.js",
-  "files": [
-    "dist",
-    "src",
-    "!**/__tests__"
-  ],
-  "dependencies": {
-    "clone": "^2.1.2",
-    "uslug": "^1.0.4"
-  },
-  "devDependencies": {
-    "ava": "2.4.0",
-    "@gerhobbelt/babel-cli": "7.2.1-26",
-    "@gerhobbelt/babel-plugin-proposal-object-rest-spread": "7.2.1-26",
-    "@gerhobbelt/babel-core": "7.2.1-26",
-    "@gerhobbelt/babel-eslint": "9.0.0-3",
-    "@gerhobbelt/babel-preset-es2015": "7.2.1-26",
-    "@gerhobbelt/babel-preset-stage-2": "7.2.1-26",
-    "coveralls": "3.0.7",
-    "eslint": "6.6.0",
-    "eslint-config-i-am-meticulous": "11.0.0",
-    "eslint-plugin-import": "2.18.2",
-    "@gerhobbelt/markdown-it": "10.0.0-30",
-    "nyc": "14.1.1",
-    "standard-version": "7.0.0"
+  "module": "dist/markdown-it.mjs",
+  "engines": {
+    "node": ">=10"
   },
   "scripts": {
     "lint": "eslint --ignore-path .gitignore --fix .",
@@ -45,9 +25,32 @@
     "test": "npm -s run tests",
     "test-with-coverage": "nyc npm run test",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "build": "babel src --ignore \"src/__tests__/**/*.js\" --out-dir dist --delete-dir-on-start",
+    "build": "babel src --ignore \"test/**/*.js\" --out-dir dist --delete-dir-on-start",
     "release-orig": "standard-version; git push --follow-tags",
     "pub": "npm publish --access public"
+  },
+  "dependencies": {
+    "clone": "^2.1.2",
+    "uslug": "^1.0.4"
+  },
+  "devDependencies": {
+    "@babel/cli": "7.8.4",
+    "@babel/core": "7.9.6",
+    "@babel/register": "^7.9.0",
+    "@gerhobbelt/markdown-it": "10.0.0-34",
+    "ava": "3.8.2",
+    "coveralls": "3.1.0",
+    "cross-env": "7.0.2",
+    "eslint": "7.0.0",
+    "eslint-config-i-am-meticulous": "12.0.0",
+    "eslint-plugin-import": "2.20.2",
+    "nyc": "15.0.1",
+    "rollup": "2.9.1",
+    "rollup-plugin-commonjs": "10.1.0",
+    "rollup-plugin-json": "4.0.0",
+    "rollup-plugin-node-resolve": "5.2.0",
+    "standard-version": "8.0.0",
+    "terser": "4.6.13"
   },
   "babel": {
     "presets": [

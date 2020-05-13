@@ -1,16 +1,16 @@
-import test from "ava";
+import test from 'ava';
 
-import mdIt from "./utils/md-it";
+import mdIt from './utils/md-it';
 
-test("markdown-it-toc-and-anchor toc", t => {
-  t.is(mdIt("", { toc: true }), "", "should work with nothing");
+test('markdown-it-toc-and-anchor toc', t => {
+  t.is(mdIt('', { toc: true }), '', 'should work with nothing');
 
-  t.is(mdIt("@[toc]"), "<p></p>\n", "should do nothing if not asked to");
+  t.is(mdIt('@[toc]'), '<p></p>\n', 'should do nothing if not asked to');
 
   t.is(
-    mdIt("@[toc]", { toc: true }),
-    "<p></p>\n",
-    "should do nothing with no heading"
+    mdIt('@[toc]', { toc: true }),
+    '<p></p>\n',
+    'should do nothing with no heading'
   );
 
   t.is(
@@ -28,7 +28,7 @@ test("markdown-it-toc-and-anchor toc", t => {
 </ul>
 </p>
 <h1 id="heading">Heading</h1>\n`,
-    "should work with soft breaks"
+    'should work with soft breaks'
   );
 
   t.is(
@@ -39,7 +39,7 @@ test("markdown-it-toc-and-anchor toc", t => {
     ),
     `<p><strong>123</strong>+
 </p>\n`,
-    "should work with line breaks after text before toc"
+    'should work with line breaks after text before toc'
   );
 
   t.is(
@@ -52,7 +52,7 @@ test("markdown-it-toc-and-anchor toc", t => {
     ),
     `<p>@[tac]</p>
 <h1 id="heading">Heading</h1>\n`,
-    "should not generate toc with different tokens starting with @["
+    'should not generate toc with different tokens starting with @['
   );
 
   t.is(
@@ -80,7 +80,7 @@ and next element in the same inline token`
 # Heading`,
       {
         toc: true,
-        tocClassName: "test"
+        tocClassName: 'test'
       }
     ),
     `<p><ul class="test">
@@ -88,7 +88,7 @@ and next element in the same inline token`
 </ul>
 </p>
 <h1 id="heading">Heading</h1>\n`,
-    "should allow custom class"
+    'should allow custom class'
   );
 
   t.is(
@@ -106,7 +106,7 @@ and next element in the same inline token`
 </p>
 <h1 id="heading">Heading</h1>\n`,
     /* eslint-disable max-len */
-    "should handle not including default class in anchors when setting tocClassName to null"
+    'should handle not including default class in anchors when setting tocClassName to null'
   );
 
   t.is(
@@ -122,7 +122,7 @@ and next element in the same inline token`
 </ul>
 </p>
 <h1 id="新年快乐">新年快乐</h1>\n`,
-    "should support unicode headings"
+    'should support unicode headings'
   );
 
   t.is(
@@ -149,7 +149,7 @@ and next element in the same inline token`
 <h2 id="two">Two</h2>
 <h3 id="three">Three</h3>
 <h1 id="one">One</h1>\n`,
-    "should work when skipping first level"
+    'should work when skipping first level'
   );
 
   t.is(
@@ -177,7 +177,7 @@ and next element in the same inline token`
 <h2 id="two">Two</h2>
 <h3 id="three">Three</h3>
 <h1 id="one">One</h1>\n`,
-    "should work when skipping last level"
+    'should work when skipping last level'
   );
 
   t.is(
@@ -194,7 +194,7 @@ and next element in the same inline token`
 </p>
 <h1 id="heading">Heading</h1>
 <h1 id="heading-2">Heading</h1>\n`,
-    "should work with smiliar levels and similar titles"
+    'should work with smiliar levels and similar titles'
   );
 
   t.is(
@@ -215,7 +215,7 @@ and next element in the same inline token`
 <h1 id="heading">'Heading' ?</h1>
 <h1 id="lel">$.lel!</h1>
 <h1 id="lel-2">$.lel?</h1>\n`,
-    "should work with special chars"
+    'should work with special chars'
   );
 
   t.is(
@@ -241,7 +241,7 @@ and next element in the same inline token`
 </p>
 <h3 id="a">a</h3>
 <h1 id="b">b</h1>\n`,
-    "should work when not starting with h1"
+    'should work when not starting with h1'
   );
 
   t.is(
@@ -271,7 +271,7 @@ and next element in the same inline token`
 <h2 id="text"><strong>text</strong></h2>
 <h2 id="text-2"><em>text</em></h2>
 <h2 id="text-3"><s>text</s></h2>\n`,
-    "should work with formatted text in headings"
+    'should work with formatted text in headings'
   );
 
   t.is(
@@ -301,11 +301,11 @@ and next element in the same inline token`
 <h2 id="subheading">SubHeading</h2>
 <h1 id="heading-2">Heading 2</h1>
 <h3 id="deeper-heading">Deeper Heading</h3>\n`,
-    "should work"
+    'should work'
   );
 
   t.deepEqual(
-    mdIt(["# Heading", "# Heading", "# Heading"], { resetIds: true }),
+    mdIt([ '# Heading', '# Heading', '# Heading' ], { resetIds: true }),
     [
       '<h1 id="heading">Heading</h1>\n',
       '<h1 id="heading">Heading</h1>\n',
@@ -317,7 +317,7 @@ resetIds is true`
   );
 
   t.deepEqual(
-    mdIt(["# Heading", "# Heading", "# Heading"], { resetIds: false }),
+    mdIt([ '# Heading', '# Heading', '# Heading' ], { resetIds: false }),
     [
       '<h1 id="heading">Heading</h1>\n',
       '<h1 id="heading-2">Heading</h1>\n',
