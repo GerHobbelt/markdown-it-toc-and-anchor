@@ -1,6 +1,6 @@
 /.github
 support/
-test/
+.nyc_output
+coverage/
 Makefile
 .*
-*.yml

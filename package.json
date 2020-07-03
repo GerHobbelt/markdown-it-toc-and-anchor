@@ -3,8 +3,8 @@
   "version": "4.2.0-2",
   "description": "markdown-it plugin to add toc and anchor links in headings",
   "keywords": [
-    "markdown-it",
     "markdown-it-plugin",
+    "markdown-it",
     "markdown",
     "toc",
     "anchor"
@@ -13,20 +13,21 @@
   "repository": "GerHobbelt/markdown-it-toc-and-anchor",
   "license": "MIT",
   "source": "src/index.js",
-  "main": "dist/index.js",
-  "module": "dist/markdown-it.mjs",
+  "main": "dist/markdownItTocAndAnchor.js",
+  "module": "dist/markdownItTocAndAnchor.mjs",
   "engines": {
     "node": ">=10"
   },
   "scripts": {
-    "lint": "eslint --ignore-path .gitignore --fix .",
-    "tests": "ava",
-    "pretest": "npm -s run lint",
-    "test": "npm -s run tests",
-    "test-with-coverage": "nyc npm run test",
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "build": "babel src --ignore \"test/**/*.js\" --out-dir dist --delete-dir-on-start",
-    "release-orig": "standard-version; git push --follow-tags",
+    "build": "make",
+    "test": "make test",
+    "todo": "make todo",
+    "clean": "make clean",
+    "superclean": "make superclean",
+    "doc": "make doc",
+    "lint": "make lint",
+    "lintfix": "make lintfix",
+    "cov": "make report-coverage",
     "pub": "npm publish --access public"
   },
   "dependencies": {
@@ -34,43 +35,17 @@
     "uslug": "^1.0.4"
   },
   "devDependencies": {
-    "@babel/cli": "7.8.4",
-    "@babel/core": "7.9.6",
-    "@babel/register": "^7.9.0",
-    "@gerhobbelt/markdown-it": "10.0.0-34",
-    "ava": "3.8.2",
-    "coveralls": "3.1.0",
+    "@gerhobbelt/markdown-it": "11.0.1-41",
+    "@gerhobbelt/prepend-header": "1.0.8-3",
+    "ava": "3.9.0",
     "cross-env": "7.0.2",
-    "eslint": "7.0.0",
-    "eslint-config-i-am-meticulous": "12.0.0",
-    "eslint-plugin-import": "2.20.2",
-    "nyc": "15.0.1",
-    "rollup": "2.9.1",
-    "rollup-plugin-commonjs": "10.1.0",
-    "rollup-plugin-json": "4.0.0",
-    "rollup-plugin-node-resolve": "5.2.0",
-    "standard-version": "8.0.0",
-    "terser": "4.6.13"
-  },
-  "babel": {
-    "presets": [
-      "@babel/preset-env"
-    ],
-    "plugins": [
-      "@babel/plugin-proposal-object-rest-spread"
-    ]
-  },
-  "eslintConfig": {
-    "extends": [
-      "eslint-config-i-am-meticulous"
-    ]
+    "eslint": "7.3.1",
+    "microbundle": "0.12.2",
+    "nyc": "15.1.0"
   },
   "ava": {
     "files": [
       "**/__tests__/*.js"
-    ],
-    "require": [
-      "@babel/register"
     ]
   },
   "nyc": {

@@ -1,21 +1,9 @@
 language: node_js
 node_js:
- - 'lts/*'
- - 10
- - 12
- - node
+  - 'lts/*'
+  - 10
+  - 12
+  - node
 script: npm run build
-sudo: false
-
-# cache node modules
-cache:
-  directories:
-    - node_modules
-
-before_install:
-  # faster npm install
-  - npm set progress=false
-  # remove useless/non listed deps
-  - npm prune
-
+before_install: make prep-ci
 after_success: npm run cov
