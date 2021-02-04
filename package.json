@@ -38,26 +38,13 @@
     "uslug": "1.0.4"
   },
   "devDependencies": {
-    "@gerhobbelt/markdown-it": "12.0.4-52",
+    "@gerhobbelt/markdown-it": "^12.0.4-52",
     "@gerhobbelt/prepend-header": "1.1.0-7",
     "ava": "3.15.0",
     "cross-env": "7.0.3",
     "eslint": "7.19.0",
     "microbundle": "0.13.0",
     "nyc": "15.1.0"
-  },
-  "ava": {
-    "files": [
-      "**/__tests__/*.js"
-    ]
-  },
-  "nyc": {
-    "exclude": [
-      "**/__tests__/**"
-    ],
-    "include": [
-      "src/**"
-    ]
   },
   "reporter": [
     "lcov",

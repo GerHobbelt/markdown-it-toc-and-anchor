@@ -1,14 +1,14 @@
 import test from 'ava';
-import uslug from "uslug";
+import uslug from 'uslug';
 
-import mdIt from './utils/md-it';
+import mdIt from '../test-utils/md-it.js';
 
 test('markdown-it-toc-and-anchor toc', t => {
   t.is(mdIt('', { toc: true }), '', 'should work with nothing');
 
   t.is(mdIt('@[toc]'), '<p></p>\n', 'should do nothing if not asked to');
 
-  t.is(mdIt("@[toc]", { toc: true }), "<p></p>\n", "should do nothing if not asked to");
+  t.is(mdIt('@[toc]', { toc: true }), '<p></p>\n', 'should do nothing if not asked to');
 
   t.is(
     mdIt('@[toc]', { toc: true }),
@@ -48,7 +48,7 @@ test('markdown-it-toc-and-anchor toc', t => {
 </ul>
 </p>
 <h1>Heading</h1>\n`,
-    "should not add id attribute if `appendIdToHeading` is falsy"
+    'should not add id attribute if `appendIdToHeading` is falsy'
   );
 
 
@@ -68,7 +68,7 @@ test('markdown-it-toc-and-anchor toc', t => {
 </ul>
 </p>
 <h1 id="Heading">Heading</h1>\n`,
-    "should work with custom tocPattern"
+    'should work with custom tocPattern'
   );
 
   t.is(

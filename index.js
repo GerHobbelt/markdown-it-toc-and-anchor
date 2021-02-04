@@ -1,6 +1,6 @@
 import clone from 'clone';
 import uslug from 'uslug';
-import Token from '@gerhobbelt/markdown-it/lib/token';
+import Token from '@gerhobbelt/markdown-it/lib/token.js';
 
 const DEFAULT_TOC_PATTERN = /@\[toc\]/im;
 const TOC_MARKUP = 'TOC';
@@ -25,8 +25,8 @@ const space = () => {
 };
 
 const defaultSlugifyFn = (string) => {
-  return uslug(string, { lower: false })
-}
+  return uslug(string, { lower: false });
+};
 
 const renderAnchorLinkSymbol = options => {
   if (options.anchorLinkSymbolClassName) {
@@ -185,7 +185,7 @@ export default function (md, options) {
     let tocTokens = [];
 
     const slugifyFn =
-      (typeof options.slugify === "function" && options.slugify) || defaultSlugifyFn;
+      (typeof options.slugify === 'function' && options.slugify) || defaultSlugifyFn;
 
     for (let i = 0; i < tokens.length; i++) {
       if (tokens[i].type !== 'heading_close') {
@@ -257,7 +257,7 @@ export default function (md, options) {
     }
   });
 
-  md.inline.ruler.after("emphasis", "toc", (state) => {
+  md.inline.ruler.after('emphasis', 'toc', (state) => {
     let token;
 
     // Detect TOC markdown
@@ -265,19 +265,19 @@ export default function (md, options) {
     if (!match) {
       return false;
     }
-    const matchStart = match.index
+    const matchStart = match.index;
     if (state.pos < matchStart) {
       return false;
     }
 
     // Build content
-    token = state.push("toc_open", "toc", 1);
+    token = state.push('toc_open', 'toc', 1);
     token.markup = TOC_MARKUP;
-    token = state.push("toc_body", "", 0);
-    token = state.push("toc_close", "toc", -1);
+    token = state.push('toc_body', '', 0);
+    token = state.push('toc_close', 'toc', -1);
 
     // Update pos so the parser can continue
-    state.pos = state.pos + patternCharLength;
+    state.pos += patternCharLength;
 
     return true;
   });
@@ -285,17 +285,17 @@ export default function (md, options) {
   if (options.appendIdToHeading) {
     const originalHeadingOpen =
       md.renderer.rules.heading_open ||
-      function(...args) {
-        const [tokens, idx, options, , self] = args;
+      function (...args) {
+        const [ tokens, idx, options, , self ] = args;
         return self.renderToken(tokens, idx, options);
       };
 
-    md.renderer.rules.heading_open = function(...args) {
-      const [tokens, idx, , ,] = args;
+    md.renderer.rules.heading_open = function (...args) {
+      const [ tokens, idx, , , ] = args;
 
       const attrs = (tokens[idx].attrs = tokens[idx].attrs || []);
       const anchor = tokens[idx + 1]._tocAnchor;
-      attrs.push(["id", anchor]);
+      attrs.push([ 'id', anchor ]);
 
       if (options.anchorLink) {
         renderAnchorLink(anchor, options, ...args);
@@ -305,9 +305,9 @@ export default function (md, options) {
     };
   }
 
-  md.renderer.rules.toc_open = () => "";
-  md.renderer.rules.toc_close = () => "";
-  md.renderer.rules.toc_body = () => "";
+  md.renderer.rules.toc_open = () => '';
+  md.renderer.rules.toc_close = () => '';
+  md.renderer.rules.toc_body = () => '';
 
   if (options.toc) {
     md.renderer.rules.toc_body = () => tocHtml;

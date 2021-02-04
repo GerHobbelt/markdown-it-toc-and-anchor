@@ -1,6 +1,6 @@
 import test from 'ava';
 
-import mdIt from './utils/md-it';
+import mdIt from '../test-utils/md-it.js';
 
 test('markdown-it-toc-and-anchor anchor', t => {
   t.is(
@@ -131,7 +131,7 @@ test('markdown-it-toc-and-anchor anchor', t => {
       }
     ),
     /* eslint-disable max-len */
-    `<h1 id="section-Hello-World"><a class="markdownIt-Anchor" href="#section-Hello-World">#</a> Hello World</h1>\n`,
+    '<h1 id="section-Hello-World"><a class="markdownIt-Anchor" href="#section-Hello-World">#</a> Hello World</h1>\n',
     /* eslint-enable max-len */
     'should use prefix'
   );

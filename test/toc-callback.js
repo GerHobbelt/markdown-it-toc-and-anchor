@@ -1,12 +1,12 @@
 import test from 'ava';
 
-import mdIt from './utils/md-it';
+import mdIt from '../test-utils/md-it.js';
 
 test.cb('markdown-it-toc-and-anchor toc-callback', t => {
   const callback = function (tocMarkdown, tocArray, tocHtml) {
     t.is(
       tocMarkdown,
-      "* [Heading](#Heading)\n",
+      '* [Heading](#Heading)\n',
       'should work with disabled toc insertion + callback, returning toc only'
     );
     t.deepEqual(
@@ -14,7 +14,7 @@ test.cb('markdown-it-toc-and-anchor toc-callback', t => {
       [
         {
           content: 'Heading',
-          anchor: "Heading",
+          anchor: 'Heading',
           level: 1
         }
       ],
@@ -44,7 +44,7 @@ test.cb('markdown-it-toc-and-anchor toc-callback-toc', t => {
   const callback = function (tocMarkdown, tocArray, tocHtml) {
     t.is(
       tocMarkdown,
-      "* [Heading](#Heading)\n",
+      '* [Heading](#Heading)\n',
       'should work with enabled toc insertion + callback, returning toc only'
     );
     t.deepEqual(
@@ -52,7 +52,7 @@ test.cb('markdown-it-toc-and-anchor toc-callback-toc', t => {
       [
         {
           content: 'Heading',
-          anchor: "Heading",
+          anchor: 'Heading',
           level: 1
         }
       ],
@@ -91,7 +91,7 @@ test.cb('markdown-it-toc-and-anchor toc-callback-md', t => {
   const callback = function (tocMarkdown, tocArray, tocHtml) {
     t.is(
       tocMarkdown,
-      "* [Heading](#Heading)\n",
+      '* [Heading](#Heading)\n',
       `should work with disabled toc insertion +
       callback in md options, returning toc only`
     );
@@ -100,7 +100,7 @@ test.cb('markdown-it-toc-and-anchor toc-callback-md', t => {
       [
         {
           content: 'Heading',
-          anchor: "Heading",
+          anchor: 'Heading',
           level: 1
         }
       ],
@@ -137,7 +137,7 @@ test.cb('markdown-it-toc-and-anchor toc-callback-env', t => {
   const callback = function (tocMarkdown, tocArray, tocHtml) {
     t.is(
       tocMarkdown,
-      "* [Heading](#Heading)\n",
+      '* [Heading](#Heading)\n',
       `should work with disabled toc insertion +
       callback in md render env, returning toc only`
     );
@@ -146,7 +146,7 @@ test.cb('markdown-it-toc-and-anchor toc-callback-env', t => {
       [
         {
           content: 'Heading',
-          anchor: "Heading",
+          anchor: 'Heading',
           level: 1
         }
       ],

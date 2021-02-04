@@ -1,6 +1,6 @@
-import markdownIt from 'markdown-it';
+import markdownIt from '@gerhobbelt/markdown-it';
 
-import markdownItTocAndAnchor from '../..';
+import markdownItTocAndAnchor from '../index.js';
 
 export default (md, options = {}, mdOptions = {}, renderEnv = {}) => {
   const mdIt = markdownIt({
