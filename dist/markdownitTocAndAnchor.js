@@ -1,4 +1,4 @@
-/*! markdown-it-toc-and-anchor 4.5.0-3 https://github.com//GerHobbelt/markdown-it-toc-and-anchor @license MIT */
+/*! markdown-it-toc-and-anchor 4.5.0-4 https://github.com//GerHobbelt/markdown-it-toc-and-anchor @license MIT */
 
 import clone from 'clone';
 import uslug from 'uslug';
