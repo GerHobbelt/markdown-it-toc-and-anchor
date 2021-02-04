@@ -12,11 +12,11 @@
   "author": "Maxime Thirouin",
   "repository": "GerHobbelt/markdown-it-toc-and-anchor",
   "license": "MIT",
-  "source": "src/index.js",
+  "type": "module",
+  "source": "index.js",
   "main": "dist/markdownItTocAndAnchor.js",
-  "module": "dist/markdownItTocAndAnchor.mjs",
   "engines": {
-    "node": ">=10"
+    "node": ">=12.20.0"
   },
   "scripts": {
     "build": "make",
@@ -30,17 +30,20 @@
     "cov": "make report-coverage",
     "pub": "npm publish --access public"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
-    "clone": "^2.1.2",
-    "uslug": "^1.0.4"
+    "clone": "2.1.2",
+    "uslug": "1.0.4"
   },
   "devDependencies": {
-    "@gerhobbelt/markdown-it": "11.0.1-41",
-    "@gerhobbelt/prepend-header": "1.0.8-3",
-    "ava": "3.9.0",
-    "cross-env": "7.0.2",
-    "eslint": "7.3.1",
-    "microbundle": "0.12.2",
+    "@gerhobbelt/markdown-it": "12.0.4-52",
+    "@gerhobbelt/prepend-header": "1.1.0-7",
+    "ava": "3.15.0",
+    "cross-env": "7.0.3",
+    "eslint": "7.19.0",
+    "microbundle": "0.13.0",
     "nyc": "15.1.0"
   },
   "ava": {
@@ -55,5 +58,11 @@
     "include": [
       "src/**"
     ]
-  }
+  },
+  "reporter": [
+    "lcov",
+    "text",
+    "html",
+    "text-summary"
+  ]
 }

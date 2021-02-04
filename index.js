@@ -1,6 +1,6 @@
 import clone from 'clone';
 import uslug from 'uslug';
-import Token from 'markdown-it/lib/token';
+import Token from '@gerhobbelt/markdown-it/lib/token';
 
 const TOC = '@[toc]';
 const TOC_RE = /^@\[toc\]/im;
