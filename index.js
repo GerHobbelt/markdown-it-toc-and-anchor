@@ -2,8 +2,8 @@ import clone from 'clone';
 import uslug from 'uslug';
 import Token from '@gerhobbelt/markdown-it/lib/token';
 
-const TOC = '@[toc]';
-const TOC_RE = /^@\[toc\]/im;
+const DEFAULT_TOC_PATTERN = /@\[toc\]/im;
+const TOC_MARKUP = 'TOC';
 
 let markdownItSecondInstance = () => {};
 let headingIds = {};
@@ -23,6 +23,10 @@ const makeSafe = (string, headingIds, slugifyFn) => {
 const space = () => {
   return { ...new Token('text', '', 0), content: ' ' };
 };
+
+const defaultSlugifyFn = (string) => {
+  return uslug(string, { lower: false })
+}
 
 const renderAnchorLinkSymbol = options => {
   if (options.anchorLinkSymbolClassName) {
@@ -145,6 +149,7 @@ export default function (md, options) {
   options = {
     toc: true,
     tocClassName: 'markdownIt-TOC',
+    tocPattern: DEFAULT_TOC_PATTERN,
     tocFirstLevel: 1,
     tocLastLevel: 6,
     tocCallback: null,
@@ -156,10 +161,13 @@ export default function (md, options) {
     anchorLinkSpace: true,
     anchorLinkSymbolClassName: null,
     wrapHeadingTextInAnchor: false,
+    appendIdToHeading: true,
     ...options
   };
 
   markdownItSecondInstance = clone(md);
+
+  const patternCharLength = options.tocPattern.source.replace(/\\/g, '').length;
 
   // initialize key ids for each instance
   headingIds = {};
@@ -177,7 +185,7 @@ export default function (md, options) {
     let tocTokens = [];
 
     const slugifyFn =
-      (typeof options.slugify === 'function' && options.slugify) || uslug;
+      (typeof options.slugify === "function" && options.slugify) || defaultSlugifyFn;
 
     for (let i = 0; i < tokens.length; i++) {
       if (tokens[i].type !== 'heading_close') {
@@ -249,63 +257,57 @@ export default function (md, options) {
     }
   });
 
-  md.inline.ruler.after('emphasis', 'toc', (state, silent) => {
+  md.inline.ruler.after("emphasis", "toc", (state) => {
     let token;
-    let match;
-
-    if (
-      // Reject if the token does not start with @[
-      state.src.charCodeAt(state.pos) !== 0x40 ||
-      state.src.charCodeAt(state.pos + 1) !== 0x5b ||
-      // Don’t run any pairs in validation mode
-      silent
-    ) {
-      return false;
-    }
 
     // Detect TOC markdown
-    match = TOC_RE.exec(state.src);
-    match = !match ? [] : match.filter(m => m);
-    if (match.length < 1) {
+    const match = options.tocPattern.exec(state.src);
+    if (!match) {
+      return false;
+    }
+    const matchStart = match.index
+    if (state.pos < matchStart) {
       return false;
     }
 
     // Build content
-    token = state.push('toc_open', 'toc', 1);
-    token.markup = TOC;
-    token = state.push('toc_body', '', 0);
-    token = state.push('toc_close', 'toc', -1);
+    token = state.push("toc_open", "toc", 1);
+    token.markup = TOC_MARKUP;
+    token = state.push("toc_body", "", 0);
+    token = state.push("toc_close", "toc", -1);
 
     // Update pos so the parser can continue
-    state.pos += 6;
+    state.pos = state.pos + patternCharLength;
 
     return true;
   });
 
-  const originalHeadingOpen =
-    md.renderer.rules.heading_open ||
-    function (...args) {
-      const [ tokens, idx, options, , self ] = args;
-      return self.renderToken(tokens, idx, options);
+  if (options.appendIdToHeading) {
+    const originalHeadingOpen =
+      md.renderer.rules.heading_open ||
+      function(...args) {
+        const [tokens, idx, options, , self] = args;
+        return self.renderToken(tokens, idx, options);
+      };
+
+    md.renderer.rules.heading_open = function(...args) {
+      const [tokens, idx, , ,] = args;
+
+      const attrs = (tokens[idx].attrs = tokens[idx].attrs || []);
+      const anchor = tokens[idx + 1]._tocAnchor;
+      attrs.push(["id", anchor]);
+
+      if (options.anchorLink) {
+        renderAnchorLink(anchor, options, ...args);
+      }
+
+      return originalHeadingOpen.apply(this, args);
     };
+  }
 
-  md.renderer.rules.heading_open = function (...args) {
-    const [ tokens, idx, , , ] = args;
-
-    const attrs = (tokens[idx].attrs = tokens[idx].attrs || []);
-    const anchor = tokens[idx + 1]._tocAnchor;
-    attrs.push([ 'id', anchor ]);
-
-    if (options.anchorLink) {
-      renderAnchorLink(anchor, options, ...args);
-    }
-
-    return originalHeadingOpen.apply(this, args);
-  };
-
-  md.renderer.rules.toc_open = () => '';
-  md.renderer.rules.toc_close = () => '';
-  md.renderer.rules.toc_body = () => '';
+  md.renderer.rules.toc_open = () => "";
+  md.renderer.rules.toc_close = () => "";
+  md.renderer.rules.toc_body = () => "";
 
   if (options.toc) {
     md.renderer.rules.toc_body = () => tocHtml;

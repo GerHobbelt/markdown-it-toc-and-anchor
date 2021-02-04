@@ -58,7 +58,13 @@ markdownIt({
 
 (default: `true`)
 
-Allows you to enable/disable the toc transformation of `@[toc]`
+Allows you to enable/disable the toc transformation of toc
+
+#### `tocPattern`
+
+(default: `/\[@toc\]/`)
+
+The pattern to detect. You can specify it to meet other conventions, such as `\[TOC\]` for Typora.
 
 #### `tocClassName`
 
@@ -192,6 +198,12 @@ Allows you to customize the anchor link class. If no class is wanted set to `nul
 
 Makes the entire heading into the anchor link (takes precedence over `anchorLinkSymbol` and `anchorLinkBefore`)
 
+#### `appendIdToHeading`
+
+(default: `true`)
+
+To make anchor links work, should append id attribute to headings, but if other plugins have already done this, you can turn it off.
+
 #### `resetIds`
 
 (default: `true`)
@@ -201,7 +213,7 @@ documents on the same page.
 
 #### `slugify`
 
-(default: uses the [`uslug`](https://www.npmjs.com/package/uslug) package)
+(default: uses the [`uslug`](https://www.npmjs.com/package/uslug) package, with option `{ lower: false }`)
 
 Allows you to customize the slug function that create ids from string.
 

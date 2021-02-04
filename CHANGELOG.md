@@ -1,6 +1,41 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## [4.5.0](https://github.com/hikerpig/markdown-it-toc-and-anchor/compare/v4.4.0...v4.5.0) (2019-08-25)
+
+
+### Features
+
+* default slugify fn should not cast lowercase, use `uslug(string, { lower: false })` ([8ac4d55](https://github.com/hikerpig/markdown-it-toc-and-anchor/commit/8ac4d55))
+
+## [4.4.0](https://github.com/hikerpig/markdown-it-toc-and-anchor/compare/v4.3.1...v4.4.0) (2019-07-27)
+
+
+### Features
+
+* add `options.appendIdToHeading`, set it to false to prevent id attribute appended ([ec45059](https://github.com/hikerpig/markdown-it-toc-and-anchor/commit/ec45059))
+
+
+
+### [4.3.1](https://github.com/hikerpig/markdown-it-toc-and-anchor/compare/v4.3.0...v4.3.1) (2019-07-27)
+
+
+### Bug Fixes
+
+* misfunctioned tocPattern, add some test to fix ([7ef8f53](https://github.com/hikerpig/markdown-it-toc-and-anchor/commit/7ef8f53))
+
+
+
+<a name="4.3.0"></a>
+# [4.3.0](https://github.com/hikerpig/markdown-it-toc-and-anchor/compare/v4.2.0...v4.3.0) (2019-07-27)
+
+
+### Features
+
+* add `options.tocPattern`, customizable pattern ([35abebc](https://github.com/hikerpig/markdown-it-toc-and-anchor/commit/35abebc))
+
+
 
 <a name="4.2.0"></a>
 # 4.2.0 (2019-01-01)
