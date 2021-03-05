@@ -245,7 +245,8 @@ export default function (md, options) {
 
     tocHtml = markdownItSecondInstance.renderer.render(
       tocTokens,
-      markdownItSecondInstance.options
+      markdownItSecondInstance.options,
+      state.env
     );
 
     if (typeof state.env.tocCallback === 'function') {

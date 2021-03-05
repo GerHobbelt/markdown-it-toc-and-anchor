@@ -466,7 +466,7 @@ function index (md, options) {
       }
     }
 
-    tocHtml = markdownItSecondInstance.renderer.render(tocTokens, markdownItSecondInstance.options);
+    tocHtml = markdownItSecondInstance.renderer.render(tocTokens, markdownItSecondInstance.options, state.env);
 
     if (typeof state.env.tocCallback === 'function') {
       state.env.tocCallback.call(undefined, tocMarkdown, tocArray, tocHtml);
