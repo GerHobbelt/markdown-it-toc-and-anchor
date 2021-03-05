@@ -229,7 +229,7 @@ export default function (md, options) {
 
     tocMarkdown = generateTocMarkdownFromArray(tocArray, options);
 
-    tocTokens = markdownItSecondInstance.parse(tocMarkdown, {});
+    tocTokens = markdownItSecondInstance.parse(tocMarkdown, state.env);
 
     // Adding tocClassName to 'ul' element
     if (
