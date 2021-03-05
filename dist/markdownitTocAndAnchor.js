@@ -456,7 +456,7 @@ function index (md, options) {
     }
 
     tocMarkdown = generateTocMarkdownFromArray(tocArray, options);
-    tocTokens = markdownItSecondInstance.parse(tocMarkdown, {}); // Adding tocClassName to 'ul' element
+    tocTokens = markdownItSecondInstance.parse(tocMarkdown, state.env); // Adding tocClassName to 'ul' element
 
     if (typeof tocTokens[0] === 'object' && tocTokens[0].type === 'bullet_list_open') {
       const attrs = tocTokens[0].attrs = tocTokens[0].attrs || [];
